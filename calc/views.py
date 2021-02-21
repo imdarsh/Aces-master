@@ -20,8 +20,7 @@ def home(request):
     else:    
         return render(request,'login.html')
 @staff_member_required
-def faculty(request):
-    return render(request,'faculty.html')
+# q
 
 def index(request):
     return render(request,'student/index.html')

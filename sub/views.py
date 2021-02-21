@@ -3,14 +3,16 @@ from django.http import HttpResponse
 from .models import *
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
+from django.contrib.admin.views.decorators import staff_member_required
 
+@staff_member_required
 def setexam(request):
     if request.method == "POST":
         year = request.POST['year']
         semester = request.POST['semester']
         subject = request.POST['subject']
     return render(request,'sub/ffem.html',{'year':year,'semester':semester,'subject':subject})
-
+@staff_member_required
 def ffem(request):
     if request.method == "POST":
         year = request.GET['year']
@@ -35,3 +37,18 @@ def exam(request):
 def start_exam(request,subject):
     que = questions.objects.filter(subject=subject)
     return render(request,'student/start_exam.html',{'que':que})
+
+@staff_member_required
+def faculty(request):
+    query = questions.objects.order_by().values('subject','year','semester').distinct()
+    return render(request,'faculty.html',{'query': query})
+
+@staff_member_required
+def view_question(request,subject):
+    query = questions.objects.filter(subject=subject)
+    return render(request,'view_question.html',{'query':query})
+
+@staff_member_required
+def delete_test(request,subject):
+    delqueries = questions.objects.filter(subject=subject).delete()
+    return render(request,'faculty.html')
