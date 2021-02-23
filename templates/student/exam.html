@@ -1,4 +1,6 @@
+{% extends 'student/sbase.html' %}
 {% load static %}
+{% block content %}
 <!doctype html>
 <html lang="en">
 
@@ -16,6 +18,7 @@
 
 <body>
   <div class="container">
+    <h3>{{ user.firstname }} {{ user.lastname }}</h3>
     <div class="row row-cols-1 row-cols-md-2 g-4">
       {% for al in a %}
       <div class="m-5 shadow p-3 mb-5 bg-body rounded">
@@ -50,3 +53,4 @@
 </body>
 
 </html>
+{% endblock %}

@@ -19,8 +19,7 @@ def home(request):
             return redirect('/')
     else:    
         return render(request,'login.html')
-@staff_member_required
-# q
+
 
 def index(request):
     return render(request,'student/index.html')
@@ -73,5 +72,6 @@ def logout(request):
 def profile(request):
     inf = extendUser.objects.filter(user=request.user.id)
     return render(request,'student/profile.html',{'inf':inf});
+
 
 

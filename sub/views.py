@@ -5,6 +5,16 @@ from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 
+
+def exam(request):
+    a = questions.objects.order_by().values('subject','year','semester').distinct()
+    inf = extendUser.objects.filter(user=request.user.id)
+    return render(request,'student/exam.html',{'a':a,'inf':inf})
+
+def start_exam(request,subject):
+    que = questions.objects.filter(subject=subject)
+    return render(request,'student/start_exam.html',{'que':que})
+
 @staff_member_required
 def setexam(request):
     if request.method == "POST":
@@ -29,15 +39,6 @@ def ffem(request):
         fa.save()
     return render(request,'sub/ffem.html',{'year':year,'semester':semester,'subject':subject})
 
-
-def exam(request):
-    a = questions.objects.order_by().values('subject','year','semester').distinct()
-    return render(request,'student/exam.html',{'a':a})
-
-def start_exam(request,subject):
-    que = questions.objects.filter(subject=subject)
-    return render(request,'student/start_exam.html',{'que':que})
-
 @staff_member_required
 def faculty(request):
     query = questions.objects.order_by().values('subject','year','semester').distinct()
@@ -51,4 +52,4 @@ def view_question(request,subject):
 @staff_member_required
 def delete_test(request,subject):
     delqueries = questions.objects.filter(subject=subject).delete()
-    return render(request,'faculty.html')
+    return redirect('/faculty')
