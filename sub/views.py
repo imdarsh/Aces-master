@@ -8,8 +8,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 
 def exam(request):
     a = questions.objects.order_by().values('subject','year','semester').distinct()
-    inf = extendUser.objects.filter(user=request.user.id)
-    return render(request,'student/exam.html',{'a':a,'inf':inf})
+    return render(request,'student/exam.html',{'a':a})
 
 def start_exam(request,subject):
     que = questions.objects.filter(subject=subject)
